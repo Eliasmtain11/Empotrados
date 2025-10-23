@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <sched.h>
+#include <fcntl.h>
 
 #define TIME_SLEEP 1000
 #define SEC_TO_NANOSEC 1000000000LL
@@ -31,7 +32,7 @@ typedef struct{
 } lat_info;
 
 int main(int argc, char* argv[]) {
-    int i, err;
+    int i, err,latency_target_fd;
     lat_info *latencia_cpu;
     int N = (int) sysconf(_SC_NPROCESSORS_ONLN); // Calculamos el numero de cores que hay
     long long latencia_media_total, latencia_max_total;
