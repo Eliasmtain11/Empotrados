@@ -1,14 +1,16 @@
 CC=gcc
-CFLAGS= -Wall -Wshadow -Wvla
-DEPS =
+CFLAGS=-Wall -Wshadow -Wvla -g -D_GNU_SOURCE
+LDLIBS=-pthread -lrt
+DEPS=
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
-	
+
 all: cyclictestURJC
 
-cyclictestURJC: cyclictestURJC.c
-	gcc -g -o cyclictestURJC cyclictestURJC.c
+cyclictestURJC: cyclictestURJC.o
+	$(CC) -o $@ $^ $(LDLIBS)
 
 clean:
-	rm -f *.o cyclictestURJC 
+	rm -f *.o cyclictestURJC
+
