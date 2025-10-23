@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
             }    
         }
         file = open(filename, O_RDWR | O_CREAT | O_TRUNC, 0644);
-        char *header = "CPU, NUMERO_ITERACION, LATENCIA";
+        char *header = "CPU, NUMERO_ITERACION, LATENCIA\n";
         if (write(file, header, strlen(header)) < 0) {
                 fprintf(stderr,"Error al escribir en el archivo");
                 salida_controlada(hilos,hilos_cpu, latencias, latency_target_fd, file);
