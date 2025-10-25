@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Wshadow -Wvla -g -D_GNU_SOURCE
+CFLAGS=-Wall -Wshadow -Wvla -g 
 LDLIBS=-pthread -lrt
 DEPS=
 

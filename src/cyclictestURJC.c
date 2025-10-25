@@ -41,7 +41,6 @@ int main(int argc, char* argv[]) {
     lat_info *latencia_cpu;
     int N = (int) sysconf(_SC_NPROCESSORS_ONLN); // Calculamos el numero de cores que hay
     long long latencia_media_total, latencia_max_total;
-    struct timespec start, now;
     pthread_t *hilos = malloc(N * sizeof(pthread_t));
     thread_info *hilos_cpu = malloc(N * sizeof(thread_info));
     lat_info *latencias = malloc(N * sizeof(lat_info));
@@ -90,9 +89,9 @@ int main(int argc, char* argv[]) {
                 exit(EXIT_FAILURE);
             }
         for(i = 0; i != N; i++) {
-            latencia_media_total = latencias[i].latencia_media;
-                if(latencias[i].latencia_media > latencia_max_total) {
-                    latencia_max_total = latencias[i].latencia_media;
+            latencia_media_total += latencias[i].latencia_media;
+                if(latencias[i].latencia_max > latencia_max_total) {
+                    latencia_max_total = latencias[i].latencia_max;
                 }
                 err = array_to_csv(file,latencias[i].array_de_latencias, latencias[i].length, i);
                 if(err != 0) {
@@ -101,6 +100,7 @@ int main(int argc, char* argv[]) {
                 }
                 printf("[%d]    latencia media = %lld ns.  |  max = %lld ns\n",i,latencias[i].latencia_media, latencias[i].latencia_max);
         }
+        latencia_media_total = latencia_media_total / N;
         printf("Total latencia media = %lld ns.  |  max = %lld ns\n", latencia_media_total, latencia_max_total);   
 
     salida_controlada(hilos,hilos_cpu, latencias, latency_target_fd, file);
