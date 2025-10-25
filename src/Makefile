@@ -1,16 +1,14 @@
 CC=gcc
-CFLAGS=-Wall -Wshadow -Wvla -g 
-LDLIBS=-pthread -lrt
-DEPS=
+CFLAGS=-I -Wall -Wshadow -Wvla
+DEPS =
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
-
+	
 all: cyclictestURJC
 
-cyclictestURJC: cyclictestURJC.o
-	$(CC) -o $@ $^ $(LDLIBS)
+server: cyclictestURJC.c
+	gcc -g -o cyclictestURJC cyclictestURJC.c
 
 clean:
 	rm -f *.o cyclictestURJC
-
